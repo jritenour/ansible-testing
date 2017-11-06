@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  tasks:
+  - rds:
+      command: create
+      instance_name: new-database
+      db_engine: MySQL
+      size: 10
+      instance_type: db.m1.small
+      username: mysql_admin
+      region: us-east-1
+      password: 1nsecure
+      tags:
+        Environment: testing
+        Application: cms
+
