@@ -3,9 +3,9 @@
   tasks:
   - rds:
       command: create
-      instance_name: new-database
+      instance_name: "{{ name }}"
       db_engine: MySQL
-      size: 10
+      size: "{{ size }}"
       instance_type: db.m1.small
       username: mysql_admin
       region: us-east-1
