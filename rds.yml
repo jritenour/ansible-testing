@@ -3,7 +3,7 @@
   tasks:
   - rds:
       command: create
-      instance_name: "{{ name }}"
+      instance_name: "{{ db_name }}"
       db_engine: "{{ engine }}"
       size: "{{ size }}"
       instance_type: "{{ type }}"
