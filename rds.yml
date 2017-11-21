@@ -4,12 +4,12 @@
   - rds:
       command: create
       instance_name: "{{ name }}"
-      db_engine: MySQL
+      db_engine: "{{ engine }}"
       size: "{{ size }}"
-      instance_type: db.m1.small
-      username: mysql_admin
-      region: us-east-1
-      password: 1nsecure
+      instance_type: "{{ type }}"
+      username: "{{ user }}"
+      region: "{{ region }}
+      password: "{{ password }}"
       tags:
         Environment: testing
         Application: cms
