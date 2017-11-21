@@ -8,7 +8,7 @@
       size: "{{ size }}"
       instance_type: "{{ type }}"
       username: "{{ user }}"
-      region: "{{ region }}
+      region: "{{ region }}"
       password: "{{ password }}"
       tags:
         Environment: testing
