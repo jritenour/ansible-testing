@@ -11,9 +11,6 @@
       username: "{{ user }}"
       region: "{{ region }}"
       password: "{{ password }}"
-      tags:
-        Environment: testing
-        Application: cms
 
   - name: Create CloudForms Generic object instance
     uri:
@@ -37,3 +34,9 @@
           username: "{{ user }}"
           size: "{{ size }}"
           name: "{{ db_name }}"
+    register: service_item
+
+  - name: Debug service 
+    debug:
+      var: service_item.json
+
