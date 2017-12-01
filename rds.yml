@@ -50,5 +50,5 @@
         associations:
           provider:
           - href: https://192.168.2.46/api/providers/46000000000001
-#          service:
-#          - href: "{{ service.json.resources|last }}"
+          service:
+          - href: "{{ service.json.resources|last|json_query('href') }}"
