@@ -12,6 +12,19 @@
       region: "{{ region }}"
       password: "{{ password }}"
 
+  - name: Get services
+    uri:
+      url: "https://192.168.2.46/api/services"
+      method: GET
+      return_content: yes
+      user: admin
+      password: "smartvm"
+      validate_certs: nO
+      body_format: json
+      headers:
+        Content-Type: "application/json"
+    register: services
+
   - name: Create CloudForms Generic object instance
     uri:
       url: "https://localhost/api/generic_objects"
@@ -24,7 +37,7 @@
       body_format: json
       body:
         action: create
-        name: "API Test"
+        name: "{{ name }}" 
         generic_object_definition:
           href: "https://localhost/api/generic_object_definitions/46000000000001"
         property_attributes:
@@ -34,9 +47,10 @@
           username: "{{ user }}"
           size: "{{ size }}"
           name: "{{ db_name }}"
-    register: service_item
+        associations:
+          provider:
+          - href: https://192.168.2.46/api/providers/46000000000001
+          service:
+          - href: "{{ service.json.resources|last }}"
 
-  - name: Debug service 
-    debug:
-      var: service_item.json
 
