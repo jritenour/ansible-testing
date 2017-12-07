@@ -1,7 +1,6 @@
 ---
 - hosts: localhost
   tasks:
-  - name: create AWS Instance
   - name: Get Wordpress VM
     uri:
       url: "https://localhost/api/vms"
