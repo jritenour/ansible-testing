@@ -1,6 +1,20 @@
 ---
 - hosts: localhost
   tasks:
+  - name: create AWS Instance
+  - name: Get Wordpress VM
+    uri:
+      url: "https://localhost/api/vms"
+      method: GET
+      return_content: yes
+      user: admin
+      password: "{{ cf_password }}"
+      validate_certs: no
+      body_format: json
+      headers:
+        Content-Type: "application/json"
+    register: vms
+
   - name: create new RDS DB instance 
     rds:
       command: create
@@ -37,7 +51,7 @@
       body_format: json
       body:
         action: create
-        name: "{{ name }}" 
+        name: "{{ obj_name }}" 
         generic_object_definition:
           href: "https://localhost/api/generic_object_definitions/46000000000001"
         property_attributes:
@@ -52,6 +66,8 @@
           - href: https://192.168.2.46/api/providers/46000000000001
           service:
           - href: "{{ service.json.resources|last|json_query('href') }}"
+          vm:
+          - href: https://192.168.2.46/api/vms/46000000000013
     register: genobject
 
   - name: add generic object to service
@@ -69,3 +85,19 @@
         resource:
           resource:
             href: "genobject.json.results|last|json_query('href')"
+
+  - name: add VM to service
+    uri:
+      url: "{{ service.json.resources|last|json_query('href') }}"
+      method: POST
+      user: admin
+      password: "{{ cf_password }}"
+      validate_certs: no
+      headers:
+        Content-Type:  application/json
+      body_format: json
+      body:
+        action: add_resource
+        resource:
+          resource:
+            href: https://192.168.2.46/api/vms/46000000000013
