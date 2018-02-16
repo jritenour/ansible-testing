@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+#    vm_list:
+#      - test1
+#      - test2
+  vars_files:
+    - '../main.yml'
+
+  roles:
+    - {role: 'buildrhv'}
+  

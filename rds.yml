@@ -52,7 +52,7 @@
         action: create
         name: "{{ obj_name }}" 
         generic_object_definition:
-          href: "https://localhost/api/generic_object_definitions/46000000000001"
+          href: https://localhost/api/generic_object_definitions/"{{ definition }}"
         property_attributes:
           engine: "{{ engine }}"
           type: "{{ type }}"
@@ -62,11 +62,9 @@
           name: "{{ db_name }}"
         associations:
           provider:
-          - href: https://192.168.2.46/api/providers/46000000000001
+          - href: https://localhost/api/providers/"{{ provider }}"
           service:
           - href: "{{ service.json.resources|last|json_query('href') }}"
-          vm:
-          - href: https://192.168.2.46/api/vms/46000000000013
     register: genobject
 
   - name: add VM to service
