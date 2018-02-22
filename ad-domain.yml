@@ -8,14 +8,20 @@
       include_sub_features: yes
       state: present
 
+  - name; rest local admin password
+    win_user:
+      name: Administrator
+      password: "{{ domain_pw }}"
+      update_password: always
+      state: present
+
+  - name: import AD DS PS module
+    win_psmodule:
+      name: ADDSDeployment
+      state: present
+
   - name: configure as Domain Controller
-    win_domain_controller:
-      dns_domain_name:  "{{ domain_name }}"
-      domain_admin_user: "{{ domain_user }}"
-      domain_admin_password: "{{ domain_pw }}"
-      safe_mode_password: "{{ safe_pw }}"
-      state: domain_controller
-      log_path: c:\ansible_win_domain_controller.txt
+    win_shell:   Install-ADDSForest -DomainName "{{ domain_name }}" -SafeModeAdministratorPassword "{{ safe_pw }}" -InstallDns:$true  -NoRebootOnCompletion:$true 
 
   - name: Reboot promoted domain controller
     raw: shutdown /r
