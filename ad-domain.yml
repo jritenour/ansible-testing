@@ -21,7 +21,7 @@
       state: present
 
   - name: configure as Domain Controller
-    win_shell:   Install-ADDSForest -DomainName "{{ domain_name }}" -SafeModeAdministratorPassword (ConvertTo-SecureString "{{ safe_pw }}" -AsPlainText -Force) -InstallDns:$true  -NoRebootOnCompletion:$true 
+    win_shell:   Install-ADDSForest -DomainName "{{ domain_name }}" -SafeModeAdministratorPassword (ConvertTo-SecureString "{{ safe_pw }}" -AsPlainText -Force) -InstallDns:$true  -NoRebootOnCompletion:$true -Confirm:$false
 
   - name: Reboot promoted domain controller
     raw: shutdown /r
