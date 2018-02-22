@@ -1,5 +1,4 @@
 ---
-- hosts: all
   tasks:
   - name: install Active Directory services
     win_feature:
