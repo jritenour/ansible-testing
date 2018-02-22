@@ -4,6 +4,7 @@
   tasks:
     - name: Create a virtual network
       azure_rm_virtualnetwork:
+        cloud_environment: AzureCloud
         name: "{{ net_name }}"
         resource_group: "{{ rg }}"
         address_prefixes_cidr:
