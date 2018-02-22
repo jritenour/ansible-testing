@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Create a resource group
+    azure_rm_resourcegroup:
+      name: Testing
+      location: westus
+      tags:
+        testing: testing
+        delete: never
+  - name: Create storage account
+    azure_rm_storageaccount:
+      resource_group: Testing
+      name: jrtestaccount001
+      account_type: Standard_LRS
