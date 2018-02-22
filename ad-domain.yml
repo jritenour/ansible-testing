@@ -8,7 +8,7 @@
       include_sub_features: yes
       state: present
 
-  - name; rest local admin password
+  - name: reset local admin password
     win_user:
       name: Administrator
       password: "{{ domain_pw }}"
