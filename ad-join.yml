@@ -10,7 +10,11 @@
   - name: Debug DNS servers
     win_shell: "ipconfig /all"
   - name: Join "{{ domain_name }}" Domain
-    win_shell: add-computer -domainname "{{ domain_name }}" -credential (New-Object System.Management.Automation.PSCredential ("{{ domain_user }}", (ConvertTo-SecureString "{{ domain_pw }}" -AsPlainText -Force)))
+    win_domain_membership:
+      dns_domain_name: "{{ domain_name }}"
+      domain_admin_user: "{{ domain_user }}"	
+      domain_admin_password: "{{ domain_pw }}"    
+      state: domain
     register: adjoin_result
 
   - name: "Reboot"
