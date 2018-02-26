@@ -3,15 +3,6 @@
   connection: local
   gather_facts: no
   tasks:
-#  - name: Get facts for VM
-#    azure_rm_virtualmachine:
-#      client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
-#      tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
-#      secret: "{{ lookup('env', 'AZURE_SECRET') }}"
-#      subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
-#      resource_group: infra
-#      name: staticdc
-#    register: azure
 
   - name: Get facts for one network interface
     azure_rm_networkinterface:
@@ -19,8 +10,7 @@
       tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
       secret: "{{ lookup('env', 'AZURE_SECRET') }}"
       subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
-      resource_group: infra
-      name: staticdc
-#      name: "{{ azure.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].name }}"
+      resource_group: "{{ rg }}"
+      name: "{{ inf_name }}"
       private_ip_address: "{{ dc_ip }}"
       private_ip_allocation_method: Static
