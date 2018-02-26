@@ -9,8 +9,8 @@
       tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
       secret: "{{ lookup('env', 'AZURE_SECRET') }}"
       subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
-      resource_group: "{{ rg }}"
-      name: "{{ vm_name }}"
+      resource_group: infra
+      name: staticdc
     register: azure
 
   - name: Get facts for one network interface
