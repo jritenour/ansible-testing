@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- hosts: localhost
+  connection: local
   gather_facts: no
   tasks:
   - name: Get facts for VM
@@ -15,6 +16,9 @@
       private_ip_address: "{{ dc_ip }}"
       private_ip_allocation_method: Static
 
+- hosts: all
+  gather_facts: no
+  tasks:
   - name: Wait 600 seconds for target connection to become reachable/usable
     wait_for_connection:
  
