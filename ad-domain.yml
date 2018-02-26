@@ -1,21 +1,4 @@
 ---
-- hosts: localhost
-  connection: local
-  gather_facts: no
-  tasks:
-  - name: Get facts for VM
-    azure_rm_virtualmachine:
-      resource_group: "{{ rg }}"
-      name: "{{ vm_name }}"
-    register: azure
-
-  - name: Get facts for one network interface
-    azure_rm_networkinterface:
-      resource_group: CFME
-      name: "{{ azure.ansible_facts.azure_vm.properties.networkProfile.networkInterfaces[0].name }}"
-      private_ip_address: "{{ dc_ip }}"
-      private_ip_allocation_method: Static
-
 - hosts: all
   gather_facts: no
   tasks:
