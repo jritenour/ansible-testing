@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
 
-  - name: Get facts for one network interface
+  - name: Change private IP
     azure_rm_networkinterface:
       client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
       tenant: "{{ lookup('env', 'AZURE_TENANT') }}"
@@ -14,3 +14,16 @@
       name: "{{ int_name }}"
       private_ip_address: "{{ dc_ip }}"
       private_ip_allocation_method: Static
+
+  - name: Refresh Azure CloudForms provider
+    uri:
+      url: "https://13.90.83.234/api/providers/1"
+      method: POST
+      user: admin
+      password: "{{ cf_password }}"
+      validate_certs: no
+      headers:
+        Content-Type:  application/json
+      body_format: json
+      body:
+        action: refresh
