@@ -11,6 +11,6 @@
       secret: "{{ lookup('env', 'AZURE_SECRET') }}"
       subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
       resource_group: "{{ rg }}"
-      name: "{{ inf_name }}"
+      name: "{{ int_name }}"
       private_ip_address: "{{ dc_ip }}"
       private_ip_allocation_method: Static
