@@ -1,0 +1,20 @@
+---
+- hosts: all
+  vars: 
+    haproxy_group: haproxy
+    haproxy_user: haproxy
+    haproxy_version: 1.7
+    haproxy_global:
+      - "daemon"
+      - "maxconn 256"
+      - "user {{ haproxy_user }}"
+      - "group {{ haproxy_group }}"
+        
+    haproxy_frontend_port: 80
+    haproxy_servers_balance: roundrobin
+    haproxy_servers: 
+      - "web1 192.168.2.133:80"
+      - "web2 192.168.2.135:80"
+
+    roles:
+      - { role: serlophug.haproxy }
