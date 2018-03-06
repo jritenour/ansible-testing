@@ -13,7 +13,7 @@ defaults
     timeout server 50000ms
 
 frontend http-in
-    bind *: "{{ haproxy_port }}"
+    bind *:{{ haproxy_port }}
     mode http
     default_backend www
 backend  www
