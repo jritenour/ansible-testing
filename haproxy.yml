@@ -15,6 +15,5 @@
     haproxy_servers: 
       - "web1 192.168.2.133:80"
       - "web2 192.168.2.135:80"
-
-    roles:
-      - { role: serlophug.haproxy }
+  roles:
+    - { role: serlophug.haproxy }
