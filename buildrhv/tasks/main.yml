@@ -51,7 +51,7 @@
      pattern: name=haproxy
    when: haproxy
 
- - name: add master server to inventory
+ - name: add web server to inventory
    add_host:
      hostname: "{{ item.json.reported_device[0].ips.ip[0].address }}"
      ansible_ssh_user: root
@@ -74,7 +74,7 @@
    register: vmapi
    when: haproxy
 
- - name: add nodes to inventory
+ - name: add haproxy server to inventory
    add_host:
      hostname: "{{ item.json.reported_device[0].ips.ip[0].address }}"
      ansible_ssh_user: root

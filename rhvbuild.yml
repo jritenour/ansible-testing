@@ -31,3 +31,6 @@
     haproxy: true
   roles:
     - {role: 'buildrhv'}
+
+- import_playbook: apachetest.yml
+- import_playbook: haproxy.yml
