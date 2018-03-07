@@ -17,11 +17,11 @@
       - "web2 {{ hostvars[groups['web'][1]]['ansible_all_ipv4_addresses'][0] }}:80"
     
   tasks:
-  - name: Wait for connection
-    wait_for_connection:
-
-  - name: Gather facts
-    setup:
+    - name: Wait for connection
+      wait_for_connection:
+ 
+    - name: Gather facts
+      setup:
 
     - name: install haproxy
       yum: 
