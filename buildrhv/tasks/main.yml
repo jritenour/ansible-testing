@@ -11,25 +11,73 @@
    ovirt_vms: 
      auth: "{{ ovirt_auth }}"
      state: running
-     name: "{{ item }}"
+     name: "{{ vm_name }}"
      cluster: "{{ cluster }}"
      wait: True
      template: "{{ template_name }}"
      nics:
        - name: eth0
          profile_name: "{{ network_name }}"
-         inferface: virtio 
-   with_items: "{{ vm_list }}"
-
- - name: Tag VM as 'provsioning'
-   ovirt_tags:
-     auth: "{{ ovirt_auth }}"
-     name: provisioning
-     state: attached
-     vms: 
-       - "{{ item }}"
-   with_items: "{{ vm_list }}"
 
  - name: Wait for IP
+
    pause: 
      seconds: 30
+
+ - name: List vms
+   ovirt_vms_facts:
+     auth: "{{ ovirt_auth }}"
+     pattern: name=web*
+   when: web
+
+ - name: Get VM API info
+   uri:
+     url: "https://{{ rhvm_addr }}{{ item.href }}/reporteddevices"
+     method: GET
+     return_content: yes
+     user: "{{ rhv_user }}"
+     password: "{{ rhv_pass }}"
+     validate_certs: no
+     body_format: raw
+     headers:
+       Accept: application/json
+   with_items: "{{ ovirt_vms }}"
+   register: vmapi
+   when: web
+
+ - name: List vms
+   ovirt_vms_facts:
+     auth: "{{ ovirt_auth }}"
+     pattern: name=haproxy
+   when: node
+
+ - name: add master server to inventory
+   add_host:
+     hostname: "{{ item.json.reported_device[0].ips.ip[0].address }}"
+     ansible_ssh_user: root
+     groupname: master
+   with_items: "{{ vmapi.results }}"
+   when: web
+
+ - name: Get VM API info
+   uri:
+     url: "https://{{ rhvm_addr }}{{ item.href }}/reporteddevices"
+     method: GET
+     return_content: yes
+     user: "{{ rhv_user }}"
+     password: "{{ rhv_pass }}"
+     validate_certs: no
+     body_format: raw
+     headers:
+       Accept: application/json
+   with_items: "{{ ovirt_vms }}"
+   register: vmapi
+   when: haproxy
+
+ - name: add nodes to inventory
+   add_host:
+     hostname: "{{ item.json.reported_device[0].ips.ip[0].address }}"
+     ansible_ssh_user: root
+     groupname: haproxy
+   with_items: "{{ vmapi.results }}"
+   when: haproxy

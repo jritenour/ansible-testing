@@ -2,5 +2,26 @@
 - hosts: localhost
   connection: local
   gather_facts: no
+  vars: 
+    vm_name: web1
+    type: web
+  roles:
+    - {role: 'buildrhv'}
+
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars: 
+    vm_name: web2
+    type: web
+  roles:
+    - {role: 'buildrhv'}
+
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars: 
+    vm_name: haproxy
+    type: haproxy
   roles:
     - {role: 'buildrhv'}
