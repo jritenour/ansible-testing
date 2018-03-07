@@ -35,3 +35,4 @@
     - {role: 'buildrhv'}
 
 - import_playbook: haproxy.yml
+- import_playbook: cfgenjob.yml

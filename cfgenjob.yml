@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+
+  tasks:
+  - name: Create service catalog item request
+    uri:
+      url: "https://{{ manageiq.api_url }}/api/generic_objects"
+      method: POST
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+        Content-Type:  application/json
+      body_format: json
+      body:
+        action: create
+        name: "{{ name }}"
+        generic_object_definition:
+          href: "https://{{ manageiq.api_url }}/api/generic_object_definitions/1"
+        property_attributes:
+          haproxy_port: 80
+          host1: "{{ hostvars[groups['web'][0]]['ansible_all_ipv4_addresses'][0] }}"
+          host2: "{{ hostvars[groups['web'][1]]['ansible_all_ipv4_addresses'][0] }}"
+          lb_address: "{{ hostvars[groups['web'][0]]['ansible_all_ipv4_addresses'][0] }}"
