@@ -1,6 +1,19 @@
 ---
 - hosts: web
+  gather_facts: no
   tasks:
+  - name: Wait for connection
+    wait_for_connection:
+
+  - name: Gather facts
+    setup:
+
+  - name: wait for instance become ready to use
+    wait_for:
+     host: "{{ osp_host.openstack.public_v4 }}"
+     port: "22"
+     timeout: "320"
+     state: "started"
   - name: Install Apache
     yum:
       name: httpd
