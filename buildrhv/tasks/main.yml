@@ -49,7 +49,7 @@
    ovirt_vms_facts:
      auth: "{{ ovirt_auth }}"
      pattern: name=haproxy
-   when: node
+   when: haproxy
 
  - name: add master server to inventory
    add_host:
