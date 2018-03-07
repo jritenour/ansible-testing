@@ -7,6 +7,15 @@
      password: "{{ rhv_pass }}" 
      insecure: true
 
+
+ - name: Set the Provider URL
+   set_fact:
+     provider_url: "{{ manageiq.api_url }}/api/providers/1"
+
+ - name: Set the Service URL
+   set_fact:
+     svc_url: "/api/{{ manageiq.service }}"
+
  - name: create the VM
    ovirt_vms: 
      auth: "{{ ovirt_auth }}"
@@ -18,11 +27,35 @@
      nics:
        - name: eth0
          profile_name: "{{ network_name }}"
+   register: new_vm
+
+ - debug: var=new_vm
+
+ - set_fact: new_vm_uuid="{{ new_vm.vm.id }}"
 
  - name: Wait for IP
 
    pause: 
      seconds: 30
+
+ - name: Refresh provider in CloudForms
+   uri:
+     url: "{{ provider_url }}"
+     method: POST
+     body:
+       action: refresh
+     body_format: json
+     validate_certs: False
+     headers:
+       X-Auth-Token: "{{ manageiq.api_token }}"
+       Content-Type: "application/json" 
+     status_code: 200
+   register: output
+ - debug: var=output
+ - name: set the task href
+   set_fact:
+     task_url: "{{ output.json.task_href}}"
+ - debug: var=task_url
 
  - name: List web vms
    ovirt_vms_facts:

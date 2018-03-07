@@ -7,10 +7,6 @@
     type: web
     web: true
     haproxy: false
-  tasks:
-  - debug: var=manageiq.api_url
-  - debug: var=manageiq.api_token
-  - debug: var=manageiq.service
   roles:
     - {role: 'buildrhv'}
 

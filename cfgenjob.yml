@@ -25,11 +25,11 @@
       body_format: json
       body:
         action: create
-        name: "Testing"
+        name: "{{ dro_name }}"
         generic_object_definition:
           href: "{{ manageiq.api_url }}/api/generic_object_definitions/1"
         property_attributes:
-          haproxy_port: 80
+          haproxy_port: "{{ haproxy_port }}"
           host1: "{{ hostvars[groups['web'][0]]['ansible_all_ipv4_addresses'][0] }}"
           host2: "{{ hostvars[groups['web'][1]]['ansible_all_ipv4_addresses'][0] }}"
           lb_address: "{{ hostvars[groups['haproxy'][0]]['ansible_all_ipv4_addresses'][0] }}"
@@ -47,4 +47,4 @@
         action: add_resource
         resource:
           resource:
-            href: "genobject.json.results|last|json_query('href')"
+            href: "{{ dro.json.results[0].href }}"
