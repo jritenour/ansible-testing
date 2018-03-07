@@ -2,7 +2,7 @@
 - hosts: localhost
 
   tasks:
-  - name: Create service catalog item request
+  - name: Create DRO entry
     uri:
       url: "https://{{ manageiq.api_url }}/api/generic_objects"
       method: POST
@@ -13,7 +13,7 @@
       body_format: json
       body:
         action: create
-        name: "{{ name }}"
+        name: "Testing"
         generic_object_definition:
           href: "https://{{ manageiq.api_url }}/api/generic_object_definitions/1"
         property_attributes:
