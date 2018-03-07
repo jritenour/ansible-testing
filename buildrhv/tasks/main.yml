@@ -24,7 +24,7 @@
    pause: 
      seconds: 30
 
- - name: List vms
+ - name: List web vms
    ovirt_vms_facts:
      auth: "{{ ovirt_auth }}"
      pattern: name=web*
@@ -45,12 +45,6 @@
    register: vmapi
    when: web
 
- - name: List vms
-   ovirt_vms_facts:
-     auth: "{{ ovirt_auth }}"
-     pattern: name=haproxy
-   when: haproxy
-
  - name: add web server to inventory
    add_host:
      hostname: "{{ item.json.reported_device[0].ips.ip[0].address }}"
@@ -58,6 +52,12 @@
      groupname: master
    with_items: "{{ vmapi.results }}"
    when: web
+
+ - name: List haproxy vms
+   ovirt_vms_facts:
+     auth: "{{ ovirt_auth }}"
+     pattern: name=haproxy
+   when: haproxy
 
  - name: Get VM API info
    uri:
