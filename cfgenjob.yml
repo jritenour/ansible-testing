@@ -4,7 +4,7 @@
   tasks:
   - name: Create DRO entry
     uri:
-      url: "https://{{ manageiq.api_url }}/api/generic_objects"
+      url: "{{ manageiq.api_url }}/api/generic_objects"
       method: POST
       validate_certs: no
       headers:
