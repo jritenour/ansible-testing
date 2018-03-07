@@ -28,6 +28,7 @@
         owner: haproxy
         group: haproxy
         mode: 0644
+
     - name: Add lines for each server
       lineinfile:
         path: /etc/haproxy/haproxy.cfg
@@ -38,3 +39,15 @@
       service:
         name: haproxy
         state: restarted
+
+    - name: Allow HTTP through firewall
+      firewalld:
+        service: http
+        permanent: true
+        state: enabled
+
+    - name: restart firewall
+      service:
+        name: firewalld
+        state: restarted
+
