@@ -12,8 +12,8 @@
     haproxy_frontend_port: 80
     haproxy_servers_balance: roundrobin
     haproxy_servers: 
-      - "web1 {{ hostvars[groups['web'][0]]['ansible_all_ipv4_addresses'] }}:80"
-      - "web2 {{ hostvars[groups['web'][1]]['ansible_all_ipv4_addresses'] }}:80"
+      - "web1 {{ hostvars[groups['web'][0]]['ansible_all_ipv4_addresses'][0] }}:80"
+      - "web2 {{ hostvars[groups['web'][1]]['ansible_all_ipv4_addresses'][0] }}:80"
     
   tasks:
     - name: install haproxy
