@@ -3,4 +3,7 @@
   tasks:
   - name: debug
     debug:
-      var: "{{ manageiq }}"
+      var: hostvars
+
+  - name: run setup again
+    setup:
