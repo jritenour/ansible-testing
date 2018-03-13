@@ -2,8 +2,10 @@
 - name: Debug event target
   hosts: localhost
   connection: local
+  roles:
+  - syncrou.manageiq-automate
   tasks:
-    - name: "Get the full list of Objects"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_object_names: yes
+  - name: "Get the full list of Objects"
+    manageiq_automate:
+      workspace: "{{ workspace }}"
+      get_object_names: yes
