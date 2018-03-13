@@ -3,5 +3,7 @@
   hosts: localhost
   connection: local
   tasks:
-  - debug: var=hostvars[inventory_hostname]
-  - debug: var=manageiq.request_task
+    - name: "Get the full list of Objects"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_object_names: yes
