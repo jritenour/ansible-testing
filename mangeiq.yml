@@ -4,3 +4,4 @@
   connection: local
   tasks:
   - debug: var=manageiq.event_target
+  - debug: var=manageiq.api_url
