@@ -3,7 +3,7 @@
   tasks:
   - name: Test generic objets
     uri:
-      url: "{{ manageiq.api_url }}/api/generic_objects/20"
+      url: "{{ manageiq.api_url }}/api/generic_objects/{{ dro_id }}"
       method: GET
       return_content: yes
       validate_certs: no
