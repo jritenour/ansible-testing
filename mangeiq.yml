@@ -1,20 +1,6 @@
 ---
-- name: Get the full list of Objects
+- name: Debug event target
   hosts: localhost
   connection: local
-  vars:
-  - object: root
-
-  gather_facts: False
-  roles:
-  - syncrou.manageiq-automate
-
   tasks:
-    - name: "Get the full list of Objects"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_object_names: yes
-
-      register: allobjects
-
-    - debug: msg="allobjects:{{ allobjects }}"
+  - debug: var=manageiq.event_target
