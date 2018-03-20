@@ -1,0 +1,39 @@
+---
+- hosts: localhost
+
+  tasks:
+  - name: Get discovered hosts
+    uri:
+      url: "https://192.168.2.8/api/v2/discovered_hosts"
+      method: GET
+      return_content: yes
+      validate_certs: no
+      user: "{{ user }}"
+      force_basic_auth: yes
+      password: "{{ pw }}"
+      body_format: json
+      headers:
+        Content-Type: "application/json"
+    register: disc_hosts
+
+
+  - name:
+    debug:
+      var: disc_hosts.json.results[0].name
+
+  - name: Get services
+    uri:
+      url: "https://192.168.2.8/api/v2/discovered_hosts/{{ disc_hosts.json.results[0].name }}"
+      method: PUT
+      return_content: yes
+      validate_certs: no
+      user: "{{ user }}"
+      force_basic_auth: yes
+      password: "{{ pw }}"
+      body_format: json
+      headers:
+        Content-Type: "application/json"
+      body:
+        name: "testapi"
+        hostgroup_id: 1
+    register: disc_hosts
