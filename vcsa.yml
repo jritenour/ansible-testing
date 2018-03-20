@@ -1,0 +1,43 @@
+---
+- hosts: localhost
+  vars:
+    esxi_host: 192.168.122.106
+    esxi_user: root
+    esxi_pw: xxx
+    vm_net: 'VM Network'
+    datastore: datastore1
+    vm_name: jr-vsca
+    vcsa_pw: xxx
+    net_mode: static
+    net_ip_mode: ipv4
+    net_prefix: 24
+    vcsa_hostname: 192.168.122.60
+    vcsa_ip: 192.168.122.60
+    vcsa_gw: 192.168.122.1
+    vcsa_dns: 8.8.8.8
+    vcsa_ssh: True
+    vcsa_size: tiny 
+    sso_domain: test.lab
+    sso_site: home
+    sso_admin_pw: xxx
+    ova: '/home/jritenou/Downloads/vmware-vcsa.ova'
+  tasks:
+  - name: Deploy VCSA ovf
+    shell: |
+      ovftool --noSSLVerify --disableVerification  --acceptAllEulas --skipManifestCheck --X:injectOvfEnv --allowExtraConfig --X:enableHiddenProperties --X:waitForIp --sourceType=OVA --powerOn \
+      "--net:Network 1={{ vm_net }}" --datastore="{{ datastore }}" --diskMode=thin --name="{{ vm_name }}" \
+      "--deploymentOption=tiny" \
+      "--prop:guestinfo.cis.vmdir.domain-name={{ sso_domain }}" \
+      "--prop:guestinfo.cis.vmdir.site-name={{ sso_site }}" \
+      "--prop:guestinfo.cis.vmdir.password={{ vcsa_pw }}" \
+      "--prop:guestinfo.cis.appliance.net.addr.family=ipv4" \
+      "--prop:guestinfo.cis.appliance.net.addr={{ vcsa_hostname }}" \
+      "--prop:guestinfo.cis.appliance.net.pnid={{ vcsa_ip }}" \
+      "--prop:guestinfo.cis.appliance.net.prefix=24" \
+      "--prop:guestinfo.cis.appliance.net.mode=static" \
+      "--prop:guestinfo.cis.appliance.net.dns.servers={{ vcsa_dns }}" \
+      "--prop:guestinfo.cis.appliance.net.gateway={{ vcsa_gw }}" \
+      "--prop:guestinfo.cis.appliance.root.passwd={{ sso_admin_pw }}" \
+      "--prop:guestinfo.cis.appliance.ssh.enabled=True" \
+      "{{ ova }}" "vi://{{ esxi_user }}:{{ esxi_pw }}@{{ esxi_host }}/"
+    ignore_errors: yes
