@@ -1,13 +1,13 @@
 ---
 - hosts: localhost
   vars:
-    esxi_host: 192.168.122.106
+    esxi_host: 192.168.2.193
     esxi_user: root
-    esxi_pw: xxx
+    esxi_pw: Thebus36
     vm_net: 'VM Network'
     datastore: datastore1
     vm_name: jr-vsca
-    vcsa_pw: xxx
+    vcsa_pw: Thebus36
     net_mode: static
     net_ip_mode: ipv4
     net_prefix: 24
@@ -19,7 +19,7 @@
     vcsa_size: tiny 
     sso_domain: test.lab
     sso_site: home
-    sso_admin_pw: xxx
+    sso_admin_pw: Thebus36
     ova: '/home/jritenou/Downloads/vmware-vcsa.ova'
   tasks:
   - name: Deploy VCSA ovf
